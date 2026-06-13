@@ -1,0 +1,12 @@
+services:
+  fuseki:
+    image: stain/jena-fuseki:5.0.0
+    ports:
+      - "3030:3030"
+    environment:
+      ADMIN_PASSWORD: admin
+      FUSEKI_DATASET_1: publications
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:3030/$$/ping"]
+      interval: 5s
+      retries: 12

@@ -1,0 +1,959 @@
+@prefix :     <http://aispire.example.org/publications/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- Venues ----
+:NeurIPS a :Venue ; rdfs:label "NeurIPS" .
+:ACL a :Venue ; rdfs:label "ACL" .
+:ICML a :Venue ; rdfs:label "ICML" .
+:CVPR a :Venue ; rdfs:label "CVPR" .
+:EMNLP a :Venue ; rdfs:label "EMNLP" .
+:ICLR a :Venue ; rdfs:label "ICLR" .
+:AAAI a :Venue ; rdfs:label "AAAI" .
+:IJCAI a :Venue ; rdfs:label "IJCAI" .
+:KDD a :Venue ; rdfs:label "KDD" .
+:SIGIR a :Venue ; rdfs:label "SIGIR" .
+:WWW a :Venue ; rdfs:label "WWW" .
+:WSDM a :Venue ; rdfs:label "WSDM" .
+:ECCV a :Venue ; rdfs:label "ECCV" .
+:ICCV a :Venue ; rdfs:label "ICCV" .
+:NAACL a :Venue ; rdfs:label "NAACL" .
+:COLING a :Venue ; rdfs:label "COLING" .
+:UAI a :Venue ; rdfs:label "UAI" .
+:AISTATS a :Venue ; rdfs:label "AISTATS" .
+:CIKM a :Venue ; rdfs:label "CIKM" .
+:RecSys a :Venue ; rdfs:label "RecSys" .
+:ICDE a :Venue ; rdfs:label "ICDE" .
+:VLDB a :Venue ; rdfs:label "VLDB" .
+:SIGMOD a :Venue ; rdfs:label "SIGMOD" .
+:ISWC a :Venue ; rdfs:label "ISWC" .
+:ESWC a :Venue ; rdfs:label "ESWC" .
+:TPAMI a :Venue ; rdfs:label "TPAMI" .
+:JMLR a :Venue ; rdfs:label "JMLR" .
+:TACL a :Venue ; rdfs:label "TACL" .
+:ChiCAI a :Venue ; rdfs:label "CHI" .
+:InterSpeech a :Venue ; rdfs:label "InterSpeech" .
+:FAccT a :Venue ; rdfs:label "FAccT" .
+:ICASSP a :Venue ; rdfs:label "ICASSP" .
+:WMT a :Venue ; rdfs:label "WMT" .
+:CoNLL a :Venue ; rdfs:label "CoNLL" .
+:ICRA a :Venue ; rdfs:label "ICRA" .
+:IROS a :Venue ; rdfs:label "IROS" .
+:AAMAS a :Venue ; rdfs:label "AAMAS" .
+:AISTATS2 a :Venue ; rdfs:label "AISTATS-W" .
+:MICCAI a :Venue ; rdfs:label "MICCAI" .
+:ICLR-W a :Venue ; rdfs:label "ICLR-W" .
+
+# ---- Topics ----
+:topic_neural-networks a :Topic ; rdfs:label "neural-networks" .
+:topic_transformers a :Topic ; rdfs:label "transformers" .
+:topic_knowledge-graphs a :Topic ; rdfs:label "knowledge-graphs" .
+:topic_rag a :Topic ; rdfs:label "rag" .
+:topic_graph-neural-nets a :Topic ; rdfs:label "graph-neural-nets" .
+:topic_embeddings a :Topic ; rdfs:label "embeddings" .
+:topic_attention a :Topic ; rdfs:label "attention" .
+:topic_language-models a :Topic ; rdfs:label "language-models" .
+:topic_summarization a :Topic ; rdfs:label "summarization" .
+:topic_translation a :Topic ; rdfs:label "translation" .
+:topic_ner a :Topic ; rdfs:label "ner" .
+:topic_question-answering a :Topic ; rdfs:label "question-answering" .
+:topic_dialogue a :Topic ; rdfs:label "dialogue" .
+:topic_vision-transformers a :Topic ; rdfs:label "vision-transformers" .
+:topic_diffusion a :Topic ; rdfs:label "diffusion" .
+:topic_reinforcement-learning a :Topic ; rdfs:label "reinforcement-learning" .
+:topic_robotics a :Topic ; rdfs:label "robotics" .
+:topic_speech a :Topic ; rdfs:label "speech" .
+:topic_recommender-systems a :Topic ; rdfs:label "recommender-systems" .
+:topic_information-retrieval a :Topic ; rdfs:label "information-retrieval" .
+:topic_fairness a :Topic ; rdfs:label "fairness" .
+:topic_interpretability a :Topic ; rdfs:label "interpretability" .
+:topic_federated-learning a :Topic ; rdfs:label "federated-learning" .
+:topic_self-supervised a :Topic ; rdfs:label "self-supervised" .
+:topic_multimodal a :Topic ; rdfs:label "multimodal" .
+
+# ---- Authors ----
+:author000 a :Author ; rdfs:label "Hinton" ; skos:prefLabel "Hinton" .
+:author001 a :Author ; rdfs:label "Dana goodfellow" ; skos:prefLabel "Dana goodfellow" .
+:author002 a :Author ; rdfs:label "Hiro salakhutdinov" ; skos:prefLabel "Hiro salakhutdinov" ; skos:altLabel "Hiro" .
+:author003 a :Author ; rdfs:label "Dana hall" ; skos:prefLabel "Dana hall" .
+:author004 a :Author ; rdfs:label "Carlos king" ; skos:prefLabel "Carlos king" .
+:author005 a :Author ; rdfs:label "Alice russell" ; skos:prefLabel "Alice russell" .
+:author006 a :Author ; rdfs:label "Alice lewis" ; skos:prefLabel "Alice lewis" ; skos:altLabel "Alice" .
+:author007 a :Author ; rdfs:label "Noah salakhutdinov" ; skos:prefLabel "Noah salakhutdinov" ; skos:altLabel "Hinton" .
+:author008 a :Author ; rdfs:label "Oren king" ; skos:prefLabel "Oren king" .
+:author009 a :Author ; rdfs:label "Alice edwards" ; skos:prefLabel "Alice edwards" .
+:author010 a :Author ; rdfs:label "Noah khan" ; skos:prefLabel "Noah khan" .
+:author011 a :Author ; rdfs:label "Gita edwards" ; skos:prefLabel "Gita edwards" .
+:author012 a :Author ; rdfs:label "Carlos kumar" ; skos:prefLabel "Carlos kumar" ; skos:altLabel "Carlos" .
+:author013 a :Author ; rdfs:label "Lina scott" ; skos:prefLabel "Lina scott" .
+:author014 a :Author ; rdfs:label "Bo evans" ; skos:prefLabel "Bo evans" .
+:author015 a :Author ; rdfs:label "Dana brooks" ; skos:prefLabel "Dana brooks" .
+:author016 a :Author ; rdfs:label "Jin murphy" ; skos:prefLabel "Jin murphy" .
+:author017 a :Author ; rdfs:label "Lina robinson" ; skos:prefLabel "Lina robinson" ; skos:altLabel "Lina" .
+:author018 a :Author ; rdfs:label "Carlos li" ; skos:prefLabel "Carlos li" .
+:author019 a :Author ; rdfs:label "Jin barto" ; skos:prefLabel "Jin barto" .
+:author020 a :Author ; rdfs:label "Dana kumar" ; skos:prefLabel "Dana kumar" .
+:author021 a :Author ; rdfs:label "Lina devlin" ; skos:prefLabel "Lina devlin" .
+:author022 a :Author ; rdfs:label "Gita baker" ; skos:prefLabel "Gita baker" .
+:author023 a :Author ; rdfs:label "Carlos scott" ; skos:prefLabel "Carlos scott" .
+:author024 a :Author ; rdfs:label "Hiro devlin" ; skos:prefLabel "Hiro devlin" .
+:author025 a :Author ; rdfs:label "Ines brooks" ; skos:prefLabel "Ines brooks" .
+:author026 a :Author ; rdfs:label "Hiro rivera" ; skos:prefLabel "Hiro rivera" .
+:author027 a :Author ; rdfs:label "Bo ranzato" ; skos:prefLabel "Bo ranzato" .
+:author028 a :Author ; rdfs:label "Kai rodriguez" ; skos:prefLabel "Kai rodriguez" .
+:author029 a :Author ; rdfs:label "Gita ramirez" ; skos:prefLabel "Gita ramirez" .
+:author030 a :Author ; rdfs:label "Kai ilya" ; skos:prefLabel "Kai ilya" .
+:author031 a :Author ; rdfs:label "Mira ward" ; skos:prefLabel "Mira ward" .
+:author032 a :Author ; rdfs:label "Oren kingma" ; skos:prefLabel "Oren kingma" .
+:author033 a :Author ; rdfs:label "Hiro diaz" ; skos:prefLabel "Hiro diaz" .
+:author034 a :Author ; rdfs:label "Ines diaz" ; skos:prefLabel "Ines diaz" .
+:author035 a :Author ; rdfs:label "Mira sharma" ; skos:prefLabel "Mira sharma" .
+:author036 a :Author ; rdfs:label "Ethan thomas" ; skos:prefLabel "Ethan thomas" .
+:author037 a :Author ; rdfs:label "Bo richardson" ; skos:prefLabel "Bo richardson" ; skos:altLabel "Bo" .
+:author038 a :Author ; rdfs:label "Fiona rogers" ; skos:prefLabel "Fiona rogers" .
+:author039 a :Author ; rdfs:label "Carlos singh" ; skos:prefLabel "Carlos singh" .
+:author040 a :Author ; rdfs:label "Oren white" ; skos:prefLabel "Oren white" .
+:author041 a :Author ; rdfs:label "Alice rivera" ; skos:prefLabel "Alice rivera" .
+:author042 a :Author ; rdfs:label "Ines collins" ; skos:prefLabel "Ines collins" .
+:author043 a :Author ; rdfs:label "Dana zhang" ; skos:prefLabel "Dana zhang" .
+:author044 a :Author ; rdfs:label "Oren hinton" ; skos:prefLabel "Oren hinton" .
+:author045 a :Author ; rdfs:label "Ines anderson" ; skos:prefLabel "Ines anderson" .
+:author046 a :Author ; rdfs:label "Dana cox" ; skos:prefLabel "Dana cox" .
+:author047 a :Author ; rdfs:label "Gita vaswani" ; skos:prefLabel "Gita vaswani" .
+:author048 a :Author ; rdfs:label "Fiona martin" ; skos:prefLabel "Fiona martin" .
+:author049 a :Author ; rdfs:label "Alice wright" ; skos:prefLabel "Alice wright" .
+:author050 a :Author ; rdfs:label "Alice kearns" ; skos:prefLabel "Alice kearns" .
+:author051 a :Author ; rdfs:label "Jin hassabis" ; skos:prefLabel "Jin hassabis" ; skos:altLabel "Jin" .
+:author052 a :Author ; rdfs:label "Carlos barto" ; skos:prefLabel "Carlos barto" .
+:author053 a :Author ; rdfs:label "Carlos edwards" ; skos:prefLabel "Carlos edwards" .
+:author054 a :Author ; rdfs:label "Ethan schmidhuber" ; skos:prefLabel "Ethan schmidhuber" .
+:author055 a :Author ; rdfs:label "Fiona graves" ; skos:prefLabel "Fiona graves" .
+:author056 a :Author ; rdfs:label "Noah ilya" ; skos:prefLabel "Noah ilya" .
+:author057 a :Author ; rdfs:label "Gita roberts" ; skos:prefLabel "Gita roberts" .
+:author058 a :Author ; rdfs:label "Lina johnson" ; skos:prefLabel "Lina johnson" .
+:author059 a :Author ; rdfs:label "Oren vapnik" ; skos:prefLabel "Oren vapnik" .
+:author060 a :Author ; rdfs:label "Carlos khan" ; skos:prefLabel "Carlos khan" ; skos:altLabel "Carlos" .
+:author061 a :Author ; rdfs:label "Hiro king" ; skos:prefLabel "Hiro king" .
+:author062 a :Author ; rdfs:label "Carlos carter" ; skos:prefLabel "Carlos carter" .
+:author063 a :Author ; rdfs:label "Hiro blei" ; skos:prefLabel "Hiro blei" .
+:author064 a :Author ; rdfs:label "Kai sutton" ; skos:prefLabel "Kai sutton" .
+:author065 a :Author ; rdfs:label "Ines baker" ; skos:prefLabel "Ines baker" .
+:author066 a :Author ; rdfs:label "Ethan phillips" ; skos:prefLabel "Ethan phillips" .
+:author067 a :Author ; rdfs:label "Priya silver" ; skos:prefLabel "Priya silver" .
+:author068 a :Author ; rdfs:label "Noah schuster" ; skos:prefLabel "Noah schuster" ; skos:altLabel "Noah" .
+:author069 a :Author ; rdfs:label "Noah patel" ; skos:prefLabel "Noah patel" .
+:author070 a :Author ; rdfs:label "Oren richardson" ; skos:prefLabel "Oren richardson" .
+:author071 a :Author ; rdfs:label "Dana jurafsky" ; skos:prefLabel "Dana jurafsky" .
+:author072 a :Author ; rdfs:label "Kai reed" ; skos:prefLabel "Kai reed" .
+:author073 a :Author ; rdfs:label "Hiro schuster" ; skos:prefLabel "Hiro schuster" ; skos:altLabel "Hiro" .
+:author074 a :Author ; rdfs:label "Oren hochreiter" ; skos:prefLabel "Oren hochreiter" .
+:author075 a :Author ; rdfs:label "Ines brownlee" ; skos:prefLabel "Ines brownlee" .
+:author076 a :Author ; rdfs:label "Carlos johnson" ; skos:prefLabel "Carlos johnson" .
+:author077 a :Author ; rdfs:label "Dana manning" ; skos:prefLabel "Dana manning" .
+:author078 a :Author ; rdfs:label "Alice russell" ; skos:prefLabel "Alice russell" .
+:author079 a :Author ; rdfs:label "Hiro brown" ; skos:prefLabel "Hiro brown" .
+:author080 a :Author ; rdfs:label "Priya ilya" ; skos:prefLabel "Priya ilya" .
+:author081 a :Author ; rdfs:label "Bo brown" ; skos:prefLabel "Bo brown" .
+:author082 a :Author ; rdfs:label "Mira graves" ; skos:prefLabel "Mira graves" .
+:author083 a :Author ; rdfs:label "Oren wang" ; skos:prefLabel "Oren wang" .
+:author084 a :Author ; rdfs:label "Priya vaswani" ; skos:prefLabel "Priya vaswani" ; skos:altLabel "Priya" .
+:author085 a :Author ; rdfs:label "Gita jurafsky" ; skos:prefLabel "Gita jurafsky" .
+:author086 a :Author ; rdfs:label "Bo diaz" ; skos:prefLabel "Bo diaz" .
+:author087 a :Author ; rdfs:label "Bo young" ; skos:prefLabel "Bo young" .
+:author088 a :Author ; rdfs:label "Fiona jurafsky" ; skos:prefLabel "Fiona jurafsky" .
+:author089 a :Author ; rdfs:label "Carlos rivers" ; skos:prefLabel "Carlos rivers" ; skos:altLabel "Carlos" .
+:author090 a :Author ; rdfs:label "Carlos hall" ; skos:prefLabel "Carlos hall" .
+:author091 a :Author ; rdfs:label "Mira vapnik" ; skos:prefLabel "Mira vapnik" .
+:author092 a :Author ; rdfs:label "Hiro young" ; skos:prefLabel "Hiro young" .
+:author093 a :Author ; rdfs:label "Carlos lopez" ; skos:prefLabel "Carlos lopez" .
+:author094 a :Author ; rdfs:label "Kai chavez" ; skos:prefLabel "Kai chavez" .
+:author095 a :Author ; rdfs:label "Kai hassabis" ; skos:prefLabel "Kai hassabis" .
+:author096 a :Author ; rdfs:label "Ethan baker" ; skos:prefLabel "Ethan baker" .
+:author097 a :Author ; rdfs:label "Oren park" ; skos:prefLabel "Oren park" .
+:author098 a :Author ; rdfs:label "Carlos bengio" ; skos:prefLabel "Carlos bengio" .
+:author099 a :Author ; rdfs:label "Dana sutton" ; skos:prefLabel "Dana sutton" .
+:author100 a :Author ; rdfs:label "Ines schmidhuber" ; skos:prefLabel "Ines schmidhuber" .
+:author101 a :Author ; rdfs:label "Carlos howard" ; skos:prefLabel "Carlos howard" .
+:author102 a :Author ; rdfs:label "Jin devlin" ; skos:prefLabel "Jin devlin" .
+:author103 a :Author ; rdfs:label "Jin torres" ; skos:prefLabel "Jin torres" .
+:author104 a :Author ; rdfs:label "Alice baker" ; skos:prefLabel "Alice baker" .
+:author105 a :Author ; rdfs:label "Jin chavez" ; skos:prefLabel "Jin chavez" .
+:author106 a :Author ; rdfs:label "Ethan graves" ; skos:prefLabel "Ethan graves" ; skos:altLabel "Ethan" .
+:author107 a :Author ; rdfs:label "Dana diaz" ; skos:prefLabel "Dana diaz" .
+:author108 a :Author ; rdfs:label "Ines wang" ; skos:prefLabel "Ines wang" .
+:author109 a :Author ; rdfs:label "Kai krizhevsky" ; skos:prefLabel "Kai krizhevsky" .
+:author110 a :Author ; rdfs:label "Ines anderson" ; skos:prefLabel "Ines anderson" .
+:author111 a :Author ; rdfs:label "Bo russell" ; skos:prefLabel "Bo russell" .
+:author112 a :Author ; rdfs:label "Ines li" ; skos:prefLabel "Ines li" ; skos:altLabel "Ines" .
+:author113 a :Author ; rdfs:label "Ethan flores" ; skos:prefLabel "Ethan flores" .
+:author114 a :Author ; rdfs:label "Fiona turner" ; skos:prefLabel "Fiona turner" .
+:author115 a :Author ; rdfs:label "Noah lewis" ; skos:prefLabel "Noah lewis" ; skos:altLabel "Noah" .
+:author116 a :Author ; rdfs:label "Carlos wood" ; skos:prefLabel "Carlos wood" .
+:author117 a :Author ; rdfs:label "Ethan martin" ; skos:prefLabel "Ethan martin" ; skos:altLabel "Ethan" .
+:author118 a :Author ; rdfs:label "Lina young" ; skos:prefLabel "Lina young" .
+:author119 a :Author ; rdfs:label "Noah schmidhuber" ; skos:prefLabel "Noah schmidhuber" ; skos:altLabel "Noah" .
+
+# ---- Papers ----
+:paper000 a :Paper ;
+    rdfs:label "Paper 000" ;
+    :year 2020 ;
+    :citationCount 460 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_question-answering ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :doi "10.1000/p000" .
+:paper001 a :Paper ;
+    rdfs:label "Paper 001" ;
+    :year 2019 ;
+    :citationCount 341 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_question-answering ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 .
+:paper002 a :Paper ;
+    rdfs:label "Paper 002" ;
+    :year 2024 ;
+    :citationCount 208 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_language-models ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 .
+:paper003 a :Paper ;
+    rdfs:label "Paper 003" ;
+    :year 2024 ;
+    :citationCount 415 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_vision-transformers ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :doi "10.1000/p003" .
+:paper004 a :Paper ;
+    rdfs:label "Paper 004" ;
+    :year 2023 ;
+    :citationCount 473 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_vision-transformers ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :authoredBy :author100 .
+:paper005 a :Paper ;
+    rdfs:label "Paper 005" ;
+    :year 2024 ;
+    :citationCount 376 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_summarization ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :doi "10.1000/p005" .
+:paper006 a :Paper ;
+    rdfs:label "Paper 006" ;
+    :year 2023 ;
+    :citationCount 55 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_reinforcement-learning ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :authoredBy :author004 ;
+    :authoredBy :author111 ;
+    :doi "10.1000/p006" .
+:paper007 a :Paper ;
+    rdfs:label "Paper 007" ;
+    :year 2024 ;
+    :citationCount 470 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_language-models ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :authoredBy :author039 ;
+    :authoredBy :author044 ;
+    :doi "10.1000/p007" .
+:paper008 a :Paper ;
+    rdfs:label "Paper 008" ;
+    :year 2023 ;
+    :citationCount 98 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_knowledge-graphs ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :authoredBy :author035 ;
+    :authoredBy :author042 .
+:paper009 a :Paper ;
+    rdfs:label "Paper 009" ;
+    :year 2020 ;
+    :citationCount 179 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_speech ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :authoredBy :author086 ;
+    :authoredBy :author107 ;
+    :doi "10.1000/p009" .
+:paper010 a :Paper ;
+    rdfs:label "Paper 010" ;
+    :year 2018 ;
+    :citationCount 59 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_recommender-systems ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :authoredBy :author022 .
+:paper011 a :Paper ;
+    rdfs:label "Paper 011" ;
+    :year 2020 ;
+    :citationCount 19 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_information-retrieval ;
+    :authoredBy :author000 ;
+    :authoredBy :author001 ;
+    :doi "10.1000/p011" .
+:paper012 a :Paper ;
+    rdfs:label "Paper 012" ;
+    :year 2023 ;
+    :citationCount 402 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_robotics ;
+    :authoredBy :author000 ;
+    :authoredBy :author055 ;
+    :authoredBy :author077 ;
+    :doi "10.1000/p012" .
+:paper013 a :Paper ;
+    rdfs:label "Paper 013" ;
+    :year 2022 ;
+    :citationCount 97 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_vision-transformers ;
+    :authoredBy :author000 ;
+    :authoredBy :author005 ;
+    :authoredBy :author090 ;
+    :doi "10.1000/p013" .
+:paper014 a :Paper ;
+    rdfs:label "Paper 014" ;
+    :year 2024 ;
+    :citationCount 275 ;
+    :publishedIn :NeurIPS ;
+    :topic :topic_knowledge-graphs ;
+    :authoredBy :author046 ;
+    :authoredBy :author055 .
+:paper015 a :Paper ;
+    rdfs:label "Paper 015" ;
+    :year 2020 ;
+    :citationCount 319 ;
+    :publishedIn :ACL ;
+    :topic :topic_self-supervised ;
+    :authoredBy :author015 ;
+    :authoredBy :author084 ;
+    :authoredBy :author108 .
+:paper016 a :Paper ;
+    rdfs:label "Paper 016" ;
+    :year 2022 ;
+    :citationCount 158 ;
+    :publishedIn :ACL ;
+    :topic :topic_speech ;
+    :authoredBy :author037 ;
+    :authoredBy :author041 ;
+    :authoredBy :author051 ;
+    :authoredBy :author089 ;
+    :doi "10.1000/p016" .
+:paper017 a :Paper ;
+    rdfs:label "Paper 017" ;
+    :year 2021 ;
+    :citationCount 340 ;
+    :publishedIn :ACL ;
+    :topic :topic_information-retrieval ;
+    :authoredBy :author022 ;
+    :authoredBy :author086 ;
+    :authoredBy :author095 ;
+    :authoredBy :author115 ;
+    :doi "10.1000/p017" .
+:paper018 a :Paper ;
+    rdfs:label "Paper 018" ;
+    :year 2021 ;
+    :citationCount 280 ;
+    :publishedIn :ACL ;
+    :topic :topic_translation ;
+    :authoredBy :author038 ;
+    :doi "10.1000/p018" .
+:paper019 a :Paper ;
+    rdfs:label "Paper 019" ;
+    :year 2024 ;
+    :citationCount 296 ;
+    :publishedIn :ACL ;
+    :topic :topic_attention ;
+    :authoredBy :author056 ;
+    :authoredBy :author059 ;
+    :authoredBy :author086 ;
+    :doi "10.1000/p019" .
+:paper020 a :Paper ;
+    rdfs:label "Paper 020" ;
+    :year 2024 ;
+    :citationCount 461 ;
+    :publishedIn :ACL ;
+    :topic :topic_translation ;
+    :authoredBy :author010 ;
+    :authoredBy :author084 ;
+    :doi "10.1000/p020" .
+:paper021 a :Paper ;
+    rdfs:label "Paper 021" ;
+    :year 2023 ;
+    :citationCount 317 ;
+    :publishedIn :ACL ;
+    :topic :topic_language-models ;
+    :authoredBy :author011 ;
+    :authoredBy :author096 ;
+    :authoredBy :author104 ;
+    :doi "10.1000/p021" .
+:paper022 a :Paper ;
+    rdfs:label "Paper 022" ;
+    :year 2019 ;
+    :citationCount 412 ;
+    :publishedIn :ACL ;
+    :topic :topic_transformers ;
+    :authoredBy :author003 ;
+    :authoredBy :author018 ;
+    :doi "10.1000/p022" .
+:paper023 a :Paper ;
+    rdfs:label "Paper 023" ;
+    :year 2021 ;
+    :citationCount 312 ;
+    :publishedIn :ACL ;
+    :topic :topic_vision-transformers ;
+    :authoredBy :author058 .
+:paper024 a :Paper ;
+    rdfs:label "Paper 024" ;
+    :year 2022 ;
+    :citationCount 99 ;
+    :publishedIn :ACL ;
+    :topic :topic_fairness ;
+    :authoredBy :author018 ;
+    :authoredBy :author031 ;
+    :authoredBy :author051 ;
+    :authoredBy :author063 ;
+    :doi "10.1000/p024" .
+:paper025 a :Paper ;
+    rdfs:label "Paper 025" ;
+    :year 2024 ;
+    :citationCount 440 ;
+    :publishedIn :TACL ;
+    :topic :topic_language-models ;
+    :authoredBy :author099 ;
+    :doi "10.1000/p025" .
+:paper026 a :Paper ;
+    rdfs:label "Paper 026" ;
+    :year 2023 ;
+    :citationCount 265 ;
+    :publishedIn :IJCAI ;
+    :topic :topic_diffusion ;
+    :authoredBy :author006 ;
+    :authoredBy :author031 ;
+    :authoredBy :author071 ;
+    :authoredBy :author117 ;
+    :doi "10.1000/p026" .
+:paper027 a :Paper ;
+    rdfs:label "Paper 027" ;
+    :year 2021 ;
+    :citationCount 341 ;
+    :publishedIn :ICLR-W ;
+    :topic :topic_self-supervised ;
+    :authoredBy :author056 ;
+    :authoredBy :author096 ;
+    :authoredBy :author114 .
+:paper028 a :Paper ;
+    rdfs:label "Paper 028" ;
+    :year 2021 ;
+    :citationCount 425 ;
+    :publishedIn :FAccT ;
+    :topic :topic_diffusion ;
+    :authoredBy :author020 ;
+    :authoredBy :author095 ;
+    :authoredBy :author110 ;
+    :authoredBy :author114 ;
+    :doi "10.1000/p028" .
+:paper029 a :Paper ;
+    rdfs:label "Paper 029" ;
+    :year 2019 ;
+    :citationCount 430 ;
+    :publishedIn :ICASSP ;
+    :topic :topic_fairness ;
+    :authoredBy :author066 ;
+    :authoredBy :author098 ;
+    :authoredBy :author099 ;
+    :doi "10.1000/p029" .
+:paper030 a :Paper ;
+    rdfs:label "Paper 030" ;
+    :year 2021 ;
+    :citationCount 39 ;
+    :publishedIn :ICDE ;
+    :topic :topic_speech ;
+    :authoredBy :author030 ;
+    :authoredBy :author034 ;
+    :authoredBy :author042 ;
+    :doi "10.1000/p030" .
+:paper031 a :Paper ;
+    rdfs:label "Paper 031" ;
+    :year 2019 ;
+    :citationCount 118 ;
+    :publishedIn :EMNLP ;
+    :topic :topic_vision-transformers ;
+    :authoredBy :author019 ;
+    :authoredBy :author027 ;
+    :authoredBy :author088 ;
+    :authoredBy :author090 ;
+    :doi "10.1000/p031" .
+:paper032 a :Paper ;
+    rdfs:label "Paper 032" ;
+    :year 2022 ;
+    :citationCount 238 ;
+    :publishedIn :ESWC ;
+    :topic :topic_multimodal ;
+    :authoredBy :author007 ;
+    :authoredBy :author026 ;
+    :authoredBy :author053 ;
+    :authoredBy :author106 ;
+    :doi "10.1000/p032" .
+:paper033 a :Paper ;
+    rdfs:label "Paper 033" ;
+    :year 2023 ;
+    :citationCount 10 ;
+    :publishedIn :ESWC ;
+    :topic :topic_vision-transformers ;
+    :authoredBy :author000 ;
+    :authoredBy :author038 ;
+    :authoredBy :author045 ;
+    :authoredBy :author061 ;
+    :doi "10.1000/p033" .
+:paper034 a :Paper ;
+    rdfs:label "Paper 034" ;
+    :year 2023 ;
+    :citationCount 279 ;
+    :publishedIn :AISTATS ;
+    :topic :topic_vision-transformers ;
+    :authoredBy :author028 ;
+    :authoredBy :author062 ;
+    :doi "10.1000/p034" .
+:paper035 a :Paper ;
+    rdfs:label "Paper 035" ;
+    :year 2021 ;
+    :citationCount 172 ;
+    :publishedIn :KDD ;
+    :topic :topic_information-retrieval ;
+    :authoredBy :author021 ;
+    :authoredBy :author059 ;
+    :authoredBy :author092 ;
+    :authoredBy :author107 ;
+    :doi "10.1000/p035" .
+:paper036 a :Paper ;
+    rdfs:label "Paper 036" ;
+    :year 2021 ;
+    :citationCount 303 ;
+    :publishedIn :TACL ;
+    :topic :topic_graph-neural-nets ;
+    :authoredBy :author010 .
+:paper037 a :Paper ;
+    rdfs:label "Paper 037" ;
+    :year 2019 ;
+    :citationCount 25 ;
+    :publishedIn :InterSpeech ;
+    :topic :topic_ner ;
+    :authoredBy :author027 ;
+    :authoredBy :author041 ;
+    :authoredBy :author048 ;
+    :doi "10.1000/p037" .
+:paper038 a :Paper ;
+    rdfs:label "Paper 038" ;
+    :year 2021 ;
+    :citationCount 142 ;
+    :publishedIn :ACL ;
+    :topic :topic_self-supervised ;
+    :authoredBy :author010 ;
+    :authoredBy :author032 ;
+    :authoredBy :author060 ;
+    :authoredBy :author106 ;
+    :doi "10.1000/p038" .
+:paper039 a :Paper ;
+    rdfs:label "Paper 039" ;
+    :year 2020 ;
+    :citationCount 114 ;
+    :publishedIn :ICML ;
+    :topic :topic_multimodal ;
+    :authoredBy :author099 ;
+    :doi "10.1000/p039" .
+:paper040 a :Paper ;
+    rdfs:label "Paper 040" ;
+    :year 2019 ;
+    :citationCount 102 ;
+    :publishedIn :SIGIR ;
+    :topic :topic_language-models ;
+    :authoredBy :author079 ;
+    :doi "10.1000/p040" .
+:paper041 a :Paper ;
+    rdfs:label "Paper 041" ;
+    :year 2023 ;
+    :citationCount 58 ;
+    :publishedIn :UAI ;
+    :topic :topic_multimodal ;
+    :authoredBy :author059 ;
+    :authoredBy :author089 ;
+    :doi "10.1000/p041" .
+:paper042 a :Paper ;
+    rdfs:label "Paper 042" ;
+    :year 2022 ;
+    :citationCount 310 ;
+    :publishedIn :WWW ;
+    :topic :topic_translation ;
+    :authoredBy :author099 ;
+    :doi "10.1000/p042" .
+:paper043 a :Paper ;
+    rdfs:label "Paper 043" ;
+    :year 2018 ;
+    :citationCount 475 ;
+    :publishedIn :ESWC ;
+    :topic :topic_dialogue ;
+    :authoredBy :author073 ;
+    :authoredBy :author086 ;
+    :authoredBy :author116 .
+:paper044 a :Paper ;
+    rdfs:label "Paper 044" ;
+    :year 2019 ;
+    :citationCount 38 ;
+    :publishedIn :RecSys ;
+    :topic :topic_interpretability ;
+    :authoredBy :author013 ;
+    :authoredBy :author089 ;
+    :doi "10.1000/p044" .
+:paper045 a :Paper ;
+    rdfs:label "Paper 045" ;
+    :year 2018 ;
+    :citationCount 407 ;
+    :publishedIn :ICRA ;
+    :topic :topic_vision-transformers ;
+    :authoredBy :author044 ;
+    :doi "10.1000/p045" .
+:paper046 a :Paper ;
+    rdfs:label "Paper 046" ;
+    :year 2018 ;
+    :citationCount 259 ;
+    :publishedIn :ICASSP ;
+    :topic :topic_rag ;
+    :authoredBy :author001 ;
+    :authoredBy :author053 ;
+    :authoredBy :author108 ;
+    :doi "10.1000/p046" .
+:paper047 a :Paper ;
+    rdfs:label "Paper 047" ;
+    :year 2020 ;
+    :citationCount 325 ;
+    :publishedIn :CoNLL ;
+    :topic :topic_fairness ;
+    :authoredBy :author019 ;
+    :authoredBy :author022 ;
+    :authoredBy :author055 ;
+    :authoredBy :author090 ;
+    :doi "10.1000/p047" .
+:paper048 a :Paper ;
+    rdfs:label "Paper 048" ;
+    :year 2024 ;
+    :citationCount 470 ;
+    :publishedIn :AISTATS2 ;
+    :topic :topic_summarization ;
+    :authoredBy :author055 ;
+    :authoredBy :author059 ;
+    :authoredBy :author093 ;
+    :authoredBy :author105 ;
+    :doi "10.1000/p048" .
+:paper049 a :Paper ;
+    rdfs:label "Paper 049" ;
+    :year 2019 ;
+    :citationCount 425 ;
+    :publishedIn :ChiCAI ;
+    :topic :topic_language-models ;
+    :authoredBy :author035 .
+:paper050 a :Paper ;
+    rdfs:label "Paper 050" ;
+    :year 2022 ;
+    :citationCount 312 ;
+    :publishedIn :ICDE ;
+    :topic :topic_embeddings ;
+    :authoredBy :author003 ;
+    :authoredBy :author043 ;
+    :authoredBy :author063 ;
+    :authoredBy :author108 ;
+    :doi "10.1000/p050" .
+:paper051 a :Paper ;
+    rdfs:label "Paper 051" ;
+    :year 2020 ;
+    :citationCount 408 ;
+    :publishedIn :MICCAI ;
+    :topic :topic_federated-learning ;
+    :authoredBy :author035 ;
+    :authoredBy :author043 ;
+    :authoredBy :author112 .
+:paper052 a :Paper ;
+    rdfs:label "Paper 052" ;
+    :year 2022 ;
+    :citationCount 5 ;
+    :publishedIn :JMLR ;
+    :topic :topic_reinforcement-learning ;
+    :authoredBy :author010 ;
+    :authoredBy :author030 ;
+    :doi "10.1000/p052" .
+:paper053 a :Paper ;
+    rdfs:label "Paper 053" ;
+    :year 2019 ;
+    :citationCount 353 ;
+    :publishedIn :ACL ;
+    :topic :topic_knowledge-graphs ;
+    :authoredBy :author057 ;
+    :authoredBy :author062 ;
+    :authoredBy :author082 ;
+    :authoredBy :author091 ;
+    :doi "10.1000/p053" .
+:paper054 a :Paper ;
+    rdfs:label "Paper 054" ;
+    :year 2021 ;
+    :citationCount 354 ;
+    :publishedIn :AISTATS2 ;
+    :topic :topic_question-answering ;
+    :authoredBy :author039 ;
+    :authoredBy :author084 ;
+    :doi "10.1000/p054" .
+:paper055 a :Paper ;
+    rdfs:label "Paper 055" ;
+    :year 2022 ;
+    :citationCount 176 ;
+    :publishedIn :InterSpeech ;
+    :topic :topic_summarization ;
+    :authoredBy :author042 ;
+    :authoredBy :author045 ;
+    :authoredBy :author070 ;
+    :authoredBy :author095 ;
+    :doi "10.1000/p055" .
+:paper056 a :Paper ;
+    rdfs:label "Paper 056" ;
+    :year 2019 ;
+    :citationCount 61 ;
+    :publishedIn :ICRA ;
+    :topic :topic_multimodal ;
+    :authoredBy :author015 ;
+    :authoredBy :author040 ;
+    :doi "10.1000/p056" .
+:paper057 a :Paper ;
+    rdfs:label "Paper 057" ;
+    :year 2019 ;
+    :citationCount 110 ;
+    :publishedIn :CoNLL ;
+    :topic :topic_information-retrieval ;
+    :authoredBy :author035 ;
+    :authoredBy :author075 ;
+    :authoredBy :author092 ;
+    :authoredBy :author097 ;
+    :doi "10.1000/p057" .
+:paper058 a :Paper ;
+    rdfs:label "Paper 058" ;
+    :year 2018 ;
+    :citationCount 426 ;
+    :publishedIn :ISWC ;
+    :topic :topic_embeddings ;
+    :authoredBy :author029 ;
+    :authoredBy :author037 ;
+    :doi "10.1000/p058" .
+:paper059 a :Paper ;
+    rdfs:label "Paper 059" ;
+    :year 2023 ;
+    :citationCount 273 ;
+    :publishedIn :CVPR ;
+    :topic :topic_speech ;
+    :authoredBy :author005 ;
+    :authoredBy :author035 ;
+    :doi "10.1000/p059" .
+:paper060 a :Paper ;
+    rdfs:label "Paper 060" ;
+    :year 2019 ;
+    :citationCount 326 ;
+    :publishedIn :CIKM ;
+    :topic :topic_reinforcement-learning ;
+    :authoredBy :author001 ;
+    :authoredBy :author013 ;
+    :authoredBy :author073 ;
+    :authoredBy :author111 ;
+    :doi "10.1000/p060" .
+:paper061 a :Paper ;
+    rdfs:label "Paper 061" ;
+    :year 2020 ;
+    :citationCount 94 ;
+    :publishedIn :FAccT ;
+    :topic :topic_rag ;
+    :authoredBy :author032 .
+:paper062 a :Paper ;
+    rdfs:label "Paper 062" ;
+    :year 2021 ;
+    :citationCount 251 ;
+    :publishedIn :CVPR ;
+    :topic :topic_graph-neural-nets ;
+    :authoredBy :author073 ;
+    :doi "10.1000/p062" .
+:paper063 a :Paper ;
+    rdfs:label "Paper 063" ;
+    :year 2022 ;
+    :citationCount 485 ;
+    :publishedIn :IROS ;
+    :topic :topic_multimodal ;
+    :authoredBy :author010 ;
+    :authoredBy :author015 ;
+    :authoredBy :author031 ;
+    :doi "10.1000/p063" .
+:paper064 a :Paper ;
+    rdfs:label "Paper 064" ;
+    :year 2022 ;
+    :citationCount 404 ;
+    :publishedIn :ESWC ;
+    :topic :topic_diffusion ;
+    :authoredBy :author066 ;
+    :authoredBy :author099 .
+:paper065 a :Paper ;
+    rdfs:label "Paper 065" ;
+    :year 2020 ;
+    :citationCount 440 ;
+    :publishedIn :ICLR-W ;
+    :topic :topic_self-supervised ;
+    :authoredBy :author007 ;
+    :authoredBy :author039 ;
+    :authoredBy :author072 ;
+    :authoredBy :author079 ;
+    :doi "10.1000/p065" .
+:paper066 a :Paper ;
+    rdfs:label "Paper 066" ;
+    :year 2024 ;
+    :citationCount 106 ;
+    :publishedIn :ICLR ;
+    :topic :topic_embeddings ;
+    :authoredBy :author033 ;
+    :authoredBy :author084 ;
+    :doi "10.1000/p066" .
+:paper067 a :Paper ;
+    rdfs:label "Paper 067" ;
+    :year 2022 ;
+    :citationCount 38 ;
+    :publishedIn :ChiCAI ;
+    :topic :topic_federated-learning ;
+    :authoredBy :author000 ;
+    :authoredBy :author052 ;
+    :doi "10.1000/p067" .
+:paper068 a :Paper ;
+    rdfs:label "Paper 068" ;
+    :year 2020 ;
+    :citationCount 16 ;
+    :publishedIn :CIKM ;
+    :topic :topic_federated-learning ;
+    :authoredBy :author036 ;
+    :authoredBy :author090 .
+:paper069 a :Paper ;
+    rdfs:label "Paper 069" ;
+    :year 2018 ;
+    :citationCount 351 ;
+    :publishedIn :AISTATS2 ;
+    :topic :topic_interpretability ;
+    :authoredBy :author033 ;
+    :authoredBy :author118 .
+:paper070 a :Paper ;
+    rdfs:label "Paper 070" ;
+    :year 2019 ;
+    :citationCount 217 ;
+    :publishedIn :NAACL ;
+    :topic :topic_fairness ;
+    :authoredBy :author069 ;
+    :doi "10.1000/p070" .
+:paper071 a :Paper ;
+    rdfs:label "Paper 071" ;
+    :year 2020 ;
+    :citationCount 423 ;
+    :publishedIn :WWW ;
+    :topic :topic_translation ;
+    :authoredBy :author007 ;
+    :authoredBy :author009 ;
+    :doi "10.1000/p071" .
+:paper072 a :Paper ;
+    rdfs:label "Paper 072" ;
+    :year 2024 ;
+    :citationCount 291 ;
+    :publishedIn :RecSys ;
+    :topic :topic_federated-learning ;
+    :authoredBy :author015 ;
+    :authoredBy :author056 ;
+    :authoredBy :author059 ;
+    :doi "10.1000/p072" .
+:paper073 a :Paper ;
+    rdfs:label "Paper 073" ;
+    :year 2020 ;
+    :citationCount 256 ;
+    :publishedIn :TACL ;
+    :topic :topic_self-supervised ;
+    :authoredBy :author005 ;
+    :authoredBy :author010 ;
+    :authoredBy :author056 ;
+    :authoredBy :author076 ;
+    :doi "10.1000/p073" .
+:paper074 a :Paper ;
+    rdfs:label "Paper 074" ;
+    :year 2020 ;
+    :citationCount 13 ;
+    :publishedIn :AAMAS ;
+    :topic :topic_recommender-systems ;
+    :authoredBy :author029 .
+:paper075 a :Paper ;
+    rdfs:label "Paper 075" ;
+    :year 2024 ;
+    :citationCount 344 ;
+    :publishedIn :WSDM ;
+    :topic :topic_reinforcement-learning ;
+    :authoredBy :author005 ;
+    :authoredBy :author073 ;
+    :authoredBy :author097 ;
+    :doi "10.1000/p075" .
+:paper076 a :Paper ;
+    rdfs:label "Paper 076" ;
+    :year 2021 ;
+    :citationCount 469 ;
+    :publishedIn :ICASSP ;
+    :topic :topic_knowledge-graphs ;
+    :authoredBy :author023 ;
+    :authoredBy :author055 ;
+    :authoredBy :author074 ;
+    :doi "10.1000/p076" .
+:paper077 a :Paper ;
+    rdfs:label "Paper 077" ;
+    :year 2021 ;
+    :citationCount 170 ;
+    :publishedIn :WWW ;
+    :topic :topic_ner ;
+    :authoredBy :author013 ;
+    :authoredBy :author085 ;
+    :authoredBy :author109 ;
+    :doi "10.1000/p077" .
+:paper078 a :Paper ;
+    rdfs:label "Paper 078" ;
+    :year 2021 ;
+    :citationCount 147 ;
+    :publishedIn :InterSpeech ;
+    :topic :topic_knowledge-graphs ;
+    :authoredBy :author004 ;
+    :authoredBy :author070 ;
+    :authoredBy :author097 ;
+    :authoredBy :author104 ;
+    :doi "10.1000/p078" .
+:paper079 a :Paper ;
+    rdfs:label "Paper 079" ;
+    :year 2020 ;
+    :citationCount 59 ;
+    :publishedIn :ICRA ;
+    :topic :topic_diffusion ;
+    :authoredBy :author000 ;
+    :authoredBy :author065 ;
+    :authoredBy :author105 ;
+    :authoredBy :author110 ;
+    :doi "10.1000/p079" .
+
+
+# Lines: 956

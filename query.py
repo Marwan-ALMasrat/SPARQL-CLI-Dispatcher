@@ -1,363 +1,249 @@
 """
-query.py — SPARQL CLI Dispatcher
----------------------------------
-Takes a fixed-vocabulary natural-language intent and dispatches
-the matching SPARQL query against the publications Fuseki endpoint.
-
-Usage:
-    python query.py "list authors at NeurIPS"
-    python query.py "papers per topic"
-    python query.py "top 5 cited"
-    python query.py --endpoint http://localhost:3030/publications "top 5 cited"
+SPARQL CLI Dispatcher — publications ontology.
+Usage:  python query.py "<intent>"
+Example: python query.py "list authors at NeurIPS"
 """
 
 import argparse
 import sys
-import textwrap
-from typing import Optional
-
 import requests
 
-# ─── Fuseki endpoint (override via --endpoint) ───────────────────────────────
-DEFAULT_ENDPOINT = "http://localhost:3030/publications/sparql"
-DEFAULT_UPDATE   = "http://localhost:3030/publications/update"
+ENDPOINT = "http://localhost:3030/publications/sparql"
 
-# ─── Prefix block shared by all queries ──────────────────────────────────────
-PREFIXES = """
-PREFIX :    <http://example.org/pub#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX = """
+PREFIX :      <http://aispire.example.org/publications/>
+PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
 """
 
-# ─── Intent → SPARQL registry ────────────────────────────────────────────────
-# Each entry is a dict with:
-#   "type"        : "SELECT" | "CONSTRUCT" | "ASK"
-#   "description" : human-readable label
-#   "query"       : the SPARQL string (without prefixes)
-#   "keywords"    : list of substrings used for fuzzy matching
+# ---------------------------------------------------------------------------
+# SPARQL queries (reused from Integration 9A)
+# ---------------------------------------------------------------------------
 
-INTENTS: list[dict] = [
-    # ── 1. SELECT — list authors affiliated with NeurIPS ─────────────────────
-    {
-        "name": "list authors at NeurIPS",
+QUERIES = {
+    "list authors at neurips": {
         "type": "SELECT",
-        "description": "List all authors affiliated with the NeurIPS venue.",
-        "keywords": ["author", "neurips"],
-        "query": PREFIXES + """
-SELECT DISTINCT ?author ?name
+        "sparql": PREFIX + """
+SELECT DISTINCT ?author
 WHERE {
-    ?author a :Author ;
-            :affiliatedWith :venue_neurips ;
-            :name ?name .
+    ?paper :publishedIn :NeurIPS ;
+           :authoredBy  ?author .
 }
 ORDER BY ?author
 """,
+        "columns": ["author"],
     },
 
-    # ── 2. SELECT — count papers per topic ───────────────────────────────────
-    {
-        "name": "papers per topic",
+    "papers per topic": {
         "type": "SELECT",
-        "description": "Count the number of papers for each topic.",
-        "keywords": ["papers", "topic"],
-        "query": PREFIXES + """
-SELECT ?topic ?label (COUNT(?paper) AS ?paperCount)
+        "sparql": PREFIX + """
+SELECT ?topic (COUNT(?paper) AS ?n)
 WHERE {
-    ?paper a :Paper ;
-           :hasTopic ?topic .
-    ?topic :topicLabel ?label .
+    ?paper :topic ?topic .
 }
-GROUP BY ?topic ?label
-ORDER BY DESC(?paperCount)
+GROUP BY ?topic
+ORDER BY DESC(?n)
 """,
+        "columns": ["topic", "n"],
     },
 
-    # ── 3. SELECT — top N most-cited papers ──────────────────────────────────
-    {
-        "name": "top 5 cited",
+    "top 5 cited": {
         "type": "SELECT",
-        "description": "List the top 5 papers by citation count.",
-        "keywords": ["top", "cited"],
-        "query": PREFIXES + """
-SELECT ?paper ?title ?citationCount
+        "sparql": PREFIX + """
+SELECT ?paper ?cc
 WHERE {
-    ?paper a :Paper ;
-           :title ?title ;
-           :citationCount ?citationCount .
+    ?paper :citationCount ?cc .
 }
-ORDER BY DESC(?citationCount)
+ORDER BY DESC(?cc)
 LIMIT 5
 """,
+        "columns": ["paper", "cc"],
     },
 
-    # ── 4. SELECT — papers published at a given venue ────────────────────────
-    {
-        "name": "papers at ICML",
+    "coauthor pairs": {
         "type": "SELECT",
-        "description": "List all papers published at ICML.",
-        "keywords": ["papers at icml", "icml papers", "icml"],
-        "query": PREFIXES + """
-SELECT ?paper ?title ?year
+        "sparql": PREFIX + """
+SELECT DISTINCT ?a ?b
 WHERE {
-    ?paper a :Paper ;
-           :title ?title ;
-           :year ?year ;
-           :publishedAt :venue_icml .
+    ?paper :authoredBy ?a ;
+           :authoredBy ?b .
+    FILTER (?a != ?b)
+    FILTER (str(?a) < str(?b))
 }
-ORDER BY ?year ?title
+ORDER BY ?a ?b
 """,
+        "columns": ["a", "b"],
     },
 
-    # ── 5. SELECT — authors with more than one paper ─────────────────────────
-    {
-        "name": "prolific authors",
+    "papers with doi": {
         "type": "SELECT",
-        "description": "List authors who have written more than one paper.",
-        "keywords": ["prolific", "multiple papers", "more than one", "active authors"],
-        "query": PREFIXES + """
-SELECT ?author ?name (COUNT(?paper) AS ?paperCount)
+        "sparql": PREFIX + """
+SELECT ?paper ?doi
 WHERE {
-    ?paper a :Paper ;
-           :writtenBy ?author .
-    ?author :name ?name .
+    ?paper a :Paper .
+    OPTIONAL { ?paper :doi ?doi . }
 }
-GROUP BY ?author ?name
-HAVING (COUNT(?paper) > 1)
-ORDER BY DESC(?paperCount)
+ORDER BY ?paper
 """,
+        "columns": ["paper", "doi"],
     },
 
-    # ── 6. CONSTRUCT — build a co-authorship subgraph ────────────────────────
-    {
-        "name": "coauthor graph",
-        "type": "CONSTRUCT",
-        "description": "Construct an RDF graph of co-authorship relationships.",
-        "keywords": ["coauthor", "co-author", "graph", "construct"],
-        "query": PREFIXES + """
-CONSTRUCT {
-    ?a1 :coAuthorWith ?a2 .
-}
-WHERE {
-    ?paper a :Paper ;
-           :writtenBy ?a1 ;
-           :writtenBy ?a2 .
-    FILTER (?a1 != ?a2)
-    FILTER (STR(?a1) < STR(?a2))
-}
-""",
-    },
-
-    # ── 7. ASK — does any paper have more than 400 citations? ────────────────
-    {
-        "name": "any highly cited",
+    "any prolific author": {
         "type": "ASK",
-        "description": "Ask whether any paper has more than 400 citations.",
-        "keywords": ["highly cited", "over 400", "400 citation", "any cited"],
-        "query": PREFIXES + """
-ASK
-WHERE {
-    ?paper a :Paper ;
-           :citationCount ?c .
-    FILTER (?c > 400)
+        "sparql": PREFIX + """
+ASK {
+    SELECT ?author (COUNT(?paper) AS ?cnt)
+    WHERE {
+        ?paper :authoredBy ?author .
+    }
+    GROUP BY ?author
+    HAVING (COUNT(?paper) > 10)
 }
 """,
+        "columns": [],
     },
 
-    # ── 8. SELECT — papers in a given year ───────────────────────────────────
-    {
-        "name": "papers in 2023",
+    "graph 2023 papers": {
+        "type": "CONSTRUCT",
+        "sparql": PREFIX + """
+CONSTRUCT {
+    ?paper :authoredBy ?author .
+}
+WHERE {
+    ?paper a :Paper ;
+           :year        2023 ;
+           :authoredBy  ?author .
+}
+""",
+        "columns": [],
+    },
+
+    "authors named hinton": {
         "type": "SELECT",
-        "description": "List all papers published in 2023.",
-        "keywords": ["papers in 2023", "2023 papers", "year 2023"],
-        "query": PREFIXES + """
-SELECT ?paper ?title ?venue
+        "sparql": PREFIX + """
+SELECT DISTINCT ?author
 WHERE {
-    ?paper a :Paper ;
-           :title ?title ;
-           :year 2023 ;
-           :publishedAt ?venue .
+    ?author ?label "Hinton" .
+    FILTER (?label = skos:prefLabel || ?label = skos:altLabel)
 }
-ORDER BY ?title
 """,
+        "columns": ["author"],
     },
-]
+}
 
-# ─── Intent matching ─────────────────────────────────────────────────────────
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
 
-def match_intent(user_input: str) -> Optional[dict]:
-    """
-    Try to match the user's free-text input to a known intent.
-    Strategy:
-      1. Exact name match (case-insensitive)
-      2. All keywords present in the input (substring, case-insensitive)
-    Returns the intent dict, or None if no match.
-    """
-    lowered = user_input.lower().strip()
-
-    # Pass 1 — exact name match
-    for intent in INTENTS:
-        if intent["name"].lower() == lowered:
-            return intent
-
-    # Pass 2 — all keywords match
-    for intent in INTENTS:
-        if all(kw in lowered for kw in intent["keywords"]):
-            return intent
-
-    return None
+def _short(uri: str) -> str:
+    """Shorten a full URI to its local name prefixed with ':'."""
+    for sep in ("#", "/"):
+        if sep in uri:
+            return ":" + uri.rsplit(sep, 1)[-1]
+    return uri
 
 
-def supported_intents_table() -> str:
-    """Return a formatted table of supported intents for the error banner."""
-    lines = [
-        "",
-        "Supported intents:",
-        f"  {'Intent name':<30}  {'Type':<10}  Description",
-        "  " + "-" * 75,
-    ]
-    for intent in INTENTS:
-        lines.append(
-            f"  {intent['name']:<30}  {intent['type']:<10}  {intent['description']}"
-        )
-    return "\n".join(lines)
-
-# ─── SPARQL execution ────────────────────────────────────────────────────────
-
-def run_select(endpoint: str, query: str) -> list[dict]:
-    """Execute a SELECT query and return list of binding dicts."""
-    response = requests.get(
-        endpoint,
-        params={"query": query},
+def _run_select(sparql: str, columns: list) -> int:
+    r = requests.get(
+        ENDPOINT,
+        params={"query": sparql},
         headers={"Accept": "application/sparql-results+json"},
-        timeout=15,
+        timeout=10,
     )
-    response.raise_for_status()
-    data = response.json()
-    return data["results"]["bindings"]
-
-
-def run_construct(endpoint: str, query: str) -> str:
-    """Execute a CONSTRUCT query and return Turtle text."""
-    response = requests.get(
-        endpoint,
-        params={"query": query},
-        headers={"Accept": "text/turtle"},
-        timeout=15,
-    )
-    response.raise_for_status()
-    return response.text
-
-
-def run_ask(endpoint: str, query: str) -> bool:
-    """Execute an ASK query and return the boolean result."""
-    response = requests.get(
-        endpoint,
-        params={"query": query},
-        headers={"Accept": "application/sparql-results+json"},
-        timeout=15,
-    )
-    response.raise_for_status()
-    return response.json()["boolean"]
-
-# ─── Result formatting ───────────────────────────────────────────────────────
-
-def format_bindings(bindings: list[dict]) -> str:
-    """Pretty-print SELECT result bindings."""
+    r.raise_for_status()
+    bindings = r.json()["results"]["bindings"]
     if not bindings:
-        return "(no results)"
-    lines = []
+        print("(no results)")
+        return 0
     for row in bindings:
         parts = []
-        for var, cell in row.items():
-            # Strip full URI to local name for readability
-            value = cell["value"]
-            if value.startswith("http://example.org/pub#"):
-                value = ":" + value.split("#")[-1]
-            parts.append(f"{value}")
-        lines.append("  ".join(parts))
-    return "\n".join(lines)
-
-# ─── Main dispatcher ─────────────────────────────────────────────────────────
-
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        prog="query.py",
-        description="SPARQL CLI Dispatcher — natural-language → SPARQL → Fuseki",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=textwrap.dedent(supported_intents_table()),
-    )
-    parser.add_argument(
-        "intent",
-        metavar="INTENT",
-        help='Natural-language query intent (e.g. "top 5 cited")',
-    )
-    parser.add_argument(
-        "--endpoint",
-        default=DEFAULT_ENDPOINT,
-        metavar="URL",
-        help=f"SPARQL query endpoint (default: {DEFAULT_ENDPOINT})",
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Print the matched SPARQL query without executing it.",
-    )
-    return parser
-
-
-def main(argv: Optional[list[str]] = None) -> int:
-    parser = build_parser()
-    args = parser.parse_args(argv)
-
-    # ── Match intent ─────────────────────────────────────────────────────────
-    intent = match_intent(args.intent)
-    if intent is None:
-        print(
-            f"ERROR: Unknown intent → '{args.intent}'\n"
-            + supported_intents_table(),
-            file=sys.stderr,
-        )
-        return 1
-
-    print(f"[{intent['type']}] {intent['name']} — {intent['description']}")
-
-    # ── Dry-run: just show the query ─────────────────────────────────────────
-    if args.dry_run:
-        print("\n── SPARQL Query ──────────────────────────────────────────")
-        print(intent["query"].strip())
-        return 0
-
-    # ── Execute ───────────────────────────────────────────────────────────────
-    try:
-        query_type = intent["type"]
-
-        if query_type == "SELECT":
-            bindings = run_select(args.endpoint, intent["query"])
-            print(format_bindings(bindings))
-
-        elif query_type == "CONSTRUCT":
-            turtle = run_construct(args.endpoint, intent["query"])
-            print(turtle)
-
-        elif query_type == "ASK":
-            result = run_ask(args.endpoint, intent["query"])
-            print("YES" if result else "NO")
-
-    except requests.exceptions.ConnectionError:
-        print(
-            f"ERROR: Cannot connect to Fuseki at '{args.endpoint}'.\n"
-            "       Make sure Docker is running:  docker-compose up -d",
-            file=sys.stderr,
-        )
-        return 2
-
-    except requests.exceptions.HTTPError as exc:
-        print(f"ERROR: Fuseki returned HTTP {exc.response.status_code}", file=sys.stderr)
-        return 2
-
+        for col in columns:
+            val = row.get(col, {})
+            raw = val.get("value", "(unbound)")
+            parts.append(_short(raw) if val.get("type") == "uri" else raw)
+        print("  ".join(parts))
     return 0
 
 
+def _run_ask(sparql: str) -> int:
+    r = requests.get(
+        ENDPOINT,
+        params={"query": sparql},
+        headers={"Accept": "application/sparql-results+json"},
+        timeout=10,
+    )
+    r.raise_for_status()
+    result = r.json()["boolean"]
+    print(str(result).lower())
+    return 0
+
+
+def _run_construct(sparql: str) -> int:
+    r = requests.get(
+        ENDPOINT,
+        params={"query": sparql},
+        headers={"Accept": "text/turtle"},
+        timeout=10,
+    )
+    r.raise_for_status()
+    lines = [ln for ln in r.text.splitlines() if ln.strip() and not ln.startswith("@prefix") and not ln.startswith("PREFIX")]
+    print(f"({len(lines)} triples returned)")
+    for ln in lines[:10]:
+        print(" ", ln)
+    if len(lines) > 10:
+        print(f"  ... ({len(lines) - 10} more)")
+    return 0
+
+
+def _usage_banner() -> str:
+    intents = "\n".join(f'  python query.py "{k}"' for k in sorted(QUERIES))
+    return (
+        "Unknown intent. Supported intents:\n"
+        + intents
+    )
+
+
+# ---------------------------------------------------------------------------
+# Dispatch
+# ---------------------------------------------------------------------------
+
+def dispatch(intent: str) -> int:
+    key = intent.strip().lower()
+    if key not in QUERIES:
+        print(_usage_banner(), file=sys.stderr)
+        return 1
+
+    entry = QUERIES[key]
+    qtype = entry["type"]
+    sparql = entry["sparql"]
+
+    if qtype == "SELECT":
+        return _run_select(sparql, entry["columns"])
+    elif qtype == "ASK":
+        return _run_ask(sparql)
+    elif qtype == "CONSTRUCT":
+        return _run_construct(sparql)
+    else:
+        print(f"Unsupported query type: {qtype}", file=sys.stderr)
+        return 1
+
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Dispatch natural-language intents to SPARQL queries against the publications dataset.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="Supported intents:\n" + "\n".join(f'  "{k}"' for k in sorted(QUERIES)),
+    )
+    parser.add_argument("intent", help='Natural-language intent string, e.g. "top 5 cited"')
+    args = parser.parse_args()
+    sys.exit(dispatch(args.intent))
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
